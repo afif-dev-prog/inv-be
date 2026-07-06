@@ -132,48 +132,48 @@ namespace inventory_v2.Services
             }
         }
 
-        public async Task<ResponseMessage<string>> DeleteChildAsset(string id)
-        {
-            var response = new ResponseMessage<string>();
-            using var transaction = await _context.Database.BeginTransactionAsync();
-            try
-            {
-                var existingChildAsset = await _context.ChildAsset.AnyAsync(x => x.Id == id);
-                if (!existingChildAsset)
-                {
-                    response.Success = false;
-                    response.Message = "Child asset not found.";
-                    return response;
-                    // return Task.FromResult(response);
-                }
-                else
-                {
-                    await _context.ChildAsset.Where(x => x.Id == id).ExecuteDeleteAsync();
-                    await _context.SaveChangesAsync();
-                    await transaction.CommitAsync();
+        // public async Task<ResponseMessage<string>> DeleteChildAsset(string id)
+        // {
+        //     var response = new ResponseMessage<string>();
+        //     using var transaction = await _context.Database.BeginTransactionAsync();
+        //     try
+        //     {
+        //         var existingChildAsset = await _context.ChildAsset.AnyAsync(x => x.Id == id);
+        //         if (!existingChildAsset)
+        //         {
+        //             response.Success = false;
+        //             response.Message = "Child asset not found.";
+        //             return response;
+        //             // return Task.FromResult(response);
+        //         }
+        //         else
+        //         {
+        //             await _context.ChildAsset.Where(x => x.Id == id).ExecuteDeleteAsync();
+        //             await _context.SaveChangesAsync();
+        //             await transaction.CommitAsync();
 
 
-                    response.Success = true;
-                    response.Message = "Child asset deleted successfully.";
-                    return response;
-                }
-            }
-            catch (System.Exception e)
-            {
-                await transaction.RollbackAsync();
+        //             response.Success = true;
+        //             response.Message = "Child asset deleted successfully.";
+        //             return response;
+        //         }
+        //     }
+        //     catch (System.Exception e)
+        //     {
+        //         await transaction.RollbackAsync();
 
-                response.Success = false;
-                response.Message = e.Message.ToString();
+        //         response.Success = false;
+        //         response.Message = e.Message.ToString();
 
-                return response;
-            }
-        }
+        //         return response;
+        //     }
+        // }
     }
     public interface IChildAssetsService
     {
         Task<List<ChildAsset>> GetChildAssetsList();
         Task<ResponseMessage<string>> AddChildAsset(string parentId, ChildAsset childAsset);
         Task<ResponseMessage<string>> UpdateChildAsset(string id, ChildAsset updatedChildAsset);
-        Task<ResponseMessage<string>> DeleteChildAsset(string id);
+        // Task<ResponseMessage<string>> DeleteChildAsset(string id);
     }
 }
