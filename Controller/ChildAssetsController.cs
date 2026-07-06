@@ -27,9 +27,9 @@ namespace inventory_v2.Controller
         }
 
         [HttpPost("/api/childassets/add")]
-        public async Task<IActionResult> AddChildAsset([FromBody] Model.ChildAsset childAsset)
+        public async Task<IActionResult> AddChildAsset(string id, [FromBody] Model.ChildAsset childAsset)
         {
-            return Ok(await _childAssetsService.AddChildAsset(childAsset));
+            return Ok(await _childAssetsService.AddChildAsset(id, childAsset));
         }
 
         [HttpPut("/api/childassets/update/{id}")]
