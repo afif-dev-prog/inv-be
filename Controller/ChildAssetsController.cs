@@ -38,10 +38,10 @@ namespace inventory_v2.Controller
             return Ok(await _childAssetsService.UpdateChildAsset(id, updatedChildAsset));
         }
 
-        [HttpDelete("/api/childassets/delete/{id}")]
-        public async Task<IActionResult> DeleteChildAsset([FromRoute] string id)
-        {
-            return Ok(await _childAssetsService.DeleteChildAsset(id));
-        }
+        // [HttpDelete("/api/childassets/delete/{id}")]
+        // public async Task<IActionResult> DeleteChildAsset([FromRoute] string id)
+        // {
+        //     return Ok(await _childAssetsService.DeleteChildAsset(id));
+        // }
     }
 }
