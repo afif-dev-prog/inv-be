@@ -1,0 +1,30 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "26"
+
+      - name: Publish
+        run: dotnet publish -c Release
+
+      - name: Deploy
+        run: |
+          cp -r bin/Release/net10.0/publish/* /var/www/app/inventory_2/
+          sudo systemctl restart kestrel-asset
