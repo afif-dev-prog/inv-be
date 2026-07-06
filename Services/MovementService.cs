@@ -13,15 +13,13 @@ namespace inventory_v2.Services
     {
         private readonly DataContext _context;
         private readonly IActivityService _activityService;
-        private readonly IAssetsService assetsService;
-        private readonly IMovementCartService cartService;
+        private readonly IMovementCartService _cartService;
 
-        public MovementService(DataContext context, IActivityService activityService, IMovementCartService cartService, IAssetsService assetsService)
+        public MovementService(DataContext context, IActivityService activityService, IMovementCartService cartService)
         {
             _context = context;
             _activityService = activityService;
-            cartService = cartService;
-            assetsService = assetsService;
+            _cartService = cartService;
         }
 
         public async Task<ResponseMessage<List<Movement>>> GetMovementList()
@@ -86,7 +84,7 @@ namespace inventory_v2.Services
                 response.Success = true;
                 response.Message = "Movement recorded successfully.";
 
-                
+
                 await _activityService.AddActivity(new Activity
                 {
                     Description = $"Movement of Asset '{movement.AssetNumber}' from '{movement.OriginLocation}' to '{movement.NewLocation}' added",
